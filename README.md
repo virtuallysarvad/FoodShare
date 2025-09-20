@@ -1,14 +1,12 @@
-#FoodShare Credentials
+# FoodShare Credentials
 
-##Admin Credentials
+## Admin Credentials
+- **Username:** `foodshare_admin`  
+- **Password:** `foodshare123`
 
-username: foodshare_admin
-password: foodshare123
+## Valid User Credentials
+- **Username:** `john_doe`  
+  **Password:** `password123`
 
-##Valid User Credentials
-
-username: john_doe
-password: password123
-
-username: jane_smith
-password: password123
+- **Username:** `jane_smith`  
+  **Password:** `password123`
