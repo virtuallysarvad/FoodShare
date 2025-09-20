@@ -112,9 +112,9 @@ class FoodShareApp {
         // Navigation
         document.getElementById('hamburger').addEventListener('click', this.toggleMobileMenu);
         
-        // Modal controls
-        document.getElementById('login-btn').addEventListener('click', () => this.showModal('login-modal'));
-        document.getElementById('register-btn').addEventListener('click', () => this.showModal('register-modal'));
+        // Modal controls - using onclick instead of addEventListener to avoid conflicts
+        document.getElementById('login-btn').onclick = () => this.showModal('login-modal');
+        document.getElementById('register-btn').onclick = () => this.showModal('register-modal');
         document.getElementById('close-login').addEventListener('click', () => this.hideModal('login-modal'));
         document.getElementById('close-register').addEventListener('click', () => this.hideModal('register-modal'));
         
@@ -142,6 +142,10 @@ class FoodShareApp {
         document.getElementById('login-form').addEventListener('submit', (e) => this.handleLogin(e));
         document.getElementById('register-form').addEventListener('submit', (e) => this.handleRegister(e));
         document.getElementById('donate-form').addEventListener('submit', (e) => this.handleDonation(e));
+
+        // Clear login error when user starts typing
+        document.getElementById('login-username').addEventListener('input', () => this.hideLoginError());
+        document.getElementById('login-password').addEventListener('input', () => this.hideLoginError());
 
         // Search and filters
         document.getElementById('search-food').addEventListener('input', () => this.renderFoodList());
@@ -177,6 +181,15 @@ class FoodShareApp {
         const username = document.getElementById('login-username').value;
         const password = document.getElementById('login-password').value;
 
+        // Clear any previous error messages
+        this.hideLoginError();
+
+        // Check for admin credentials first
+        if (this.isAdminCredentials(username, password)) {
+            this.redirectToAdminDashboard();
+            return;
+        }
+
         const user = this.users.find(u => u.username === username && u.hashed_password === password);
         
         if (user) {
@@ -186,7 +199,49 @@ class FoodShareApp {
             this.updateUIForLoggedInUser();
             this.showMessage('Login successful!', 'success');
         } else {
-            this.showMessage('Invalid username or password', 'error');
+            this.showLoginError('Invalid Credentials');
+        }
+    }
+
+    // Check if credentials match admin credentials
+    isAdminCredentials(username, password) {
+        // Define admin credentials - you can modify these as needed
+        const adminCredentials = [
+            { username: 'foodshare_admin', password: 'foodshare123' },
+        ];
+
+        return adminCredentials.some(cred => 
+            cred.username === username && cred.password === password
+        );
+    }
+
+    // Redirect to admin dashboard
+    redirectToAdminDashboard() {
+        this.hideModal('login-modal');
+        this.showMessage('Redirecting to admin dashboard...', 'info');
+        
+        // Small delay to show the message before redirecting
+        setTimeout(() => {
+            // Navigate to admin dashboard
+            window.location.href = '../Admin-Dashboard/index.html';
+        }, 1000);
+    }
+
+    // Show login error message in the modal
+    showLoginError(message) {
+        const errorDiv = document.getElementById('login-error');
+        if (errorDiv) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+    }
+
+    // Hide login error message
+    hideLoginError() {
+        const errorDiv = document.getElementById('login-error');
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
         }
     }
 
@@ -266,6 +321,10 @@ class FoodShareApp {
 
         // Hide dashboard section
         document.getElementById('dashboard').style.display = 'none';
+        
+        // Clear any open modals
+        this.hideModal('login-modal');
+        this.hideModal('register-modal');
     }
 
     // Food Donation
@@ -634,6 +693,10 @@ class FoodShareApp {
 
     showModal(modalId) {
         document.getElementById(modalId).style.display = 'block';
+        // Clear login error when opening login modal
+        if (modalId === 'login-modal') {
+            this.hideLoginError();
+        }
     }
 
     hideModal(modalId) {
