@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare - Leftover Food Distribution</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-utensils"></i>
+                <span>FoodShare</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#donate" class="nav-link">Donate Food</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#browse" class="nav-link">Browse Food</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn-login" id="login-btn">Login</button>
+                </li>
+                <li class="nav-item">
+                    <button class="btn-register" id="register-btn">Register</button>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Fight Food Waste, Feed Communities</h1>
+            <p>Connect surplus food with people in need. Join our mission to reduce food waste and help those who need it most.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" id="hero-donate">Donate Food</button>
+                <button class="btn-secondary" id="hero-browse">Find Food</button>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <h3>1,250+</h3>
+                <p>Meals Shared</p>
+            </div>
+            <div class="stat">
+                <h3>500+</h3>
+                <p>Active Donors</p>
+            </div>
+            <div class="stat">
+                <h3>2,000+</h3>
+                <p>People Helped</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-login">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="switch-to-register">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-register">&times;</span>
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-phone">Phone</label>
+                    <input type="tel" id="reg-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-address">Address</label>
+                    <textarea id="reg-address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="reg-usertype">User Type</label>
+                    <select id="reg-usertype" required>
+                        <option value="">Select Type</option>
+                        <option value="donor">Donor</option>
+                        <option value="recipient">Recipient</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="switch-to-login">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Donate Food Section -->
+    <section id="donate" class="section">
+        <div class="container">
+            <h2>Donate Food</h2>
+            <div class="donate-form-container">
+                <form id="donate-form" class="donate-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="donation-title">Food Title</label>
+                            <input type="text" id="donation-title" placeholder="e.g., Fresh Pizza, Sandwiches" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="donation-quantity">Quantity</label>
+                            <input type="text" id="donation-quantity" placeholder="e.g., 10 plates, 5 boxes" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="donation-description">Description</label>
+                        <textarea id="donation-description" placeholder="Describe the food items, ingredients, and any special notes" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pickup-time">Available for Pickup Until</label>
+                            <input type="datetime-local" id="pickup-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expiry-time">Expiry Time</label>
+                            <input type="datetime-local" id="expiry-time" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">List Food for Donation</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Browse Food Section -->
+    <section id="browse" class="section">
+        <div class="container">
+            <h2>Available Food</h2>
+            <div class="search-filters">
+                <input type="text" id="search-food" placeholder="Search for food items...">
+                <select id="filter-status">
+                    <option value="">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="reserved">Reserved</option>
+                    <option value="distributed">Distributed</option>
+                </select>
+            </div>
+            <div id="food-list" class="food-grid">
+                <!-- Food items will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section (Hidden by default) -->
+    <section id="dashboard" class="section" style="display: none;">
+        <div class="container">
+            <h2>Dashboard</h2>
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="my-donations">My Donations</button>
+                <button class="tab-btn" data-tab="my-requests">My Requests</button>
+                <button class="tab-btn" data-tab="feedback">Feedback</button>
+            </div>
+            
+            <div id="my-donations" class="tab-content active">
+                <h3>My Food Donations</h3>
+                <div id="donations-list" class="donations-grid">
+                    <!-- Donations will be loaded here -->
+                </div>
+            </div>
+            
+            <div id="my-requests" class="tab-content">
+                <h3>My Food Requests</h3>
+                <div id="requests-list" class="requests-grid">
+                    <!-- Requests will be loaded here -->
+                </div>
+            </div>
+            
+            <div id="feedback" class="tab-content">
+                <h3>Feedback & Ratings</h3>
+                <div id="feedback-list" class="feedback-grid">
+                    <!-- Feedback will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About FoodShare</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>FoodShare is a platform dedicated to reducing food waste and helping communities in need. We connect individuals, restaurants, and organizations with surplus food to people who can benefit from it.</p>
+                    <p>Our mission is to create a sustainable food ecosystem where nothing goes to waste and everyone has access to nutritious meals.</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature">
+                        <i class="fas fa-heart"></i>
+                        <h3>Community Driven</h3>
+                        <p>Built by the community, for the community</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Eco-Friendly</h3>
+                        <p>Reducing food waste and environmental impact</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <h3>Inclusive</h3>
+                        <p>Open to everyone who wants to help or needs help</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 8856983609</span>
+                        <span>+91 89837 93618</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>23ce259.sarvad@pccegoa.edu.in</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>
+                            Padre Conceição College of Engineering,
+                            Agnel Technical Education Complex,
+                            Agnelganv,
+                            Verna Goa, 403722
+                            INDIA
+                        </span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FoodShare</h3>
+                    <p>Connecting communities through food sharing</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#donate">Donate</a></li>
+                        <li><a href="#browse">Browse</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FoodShare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

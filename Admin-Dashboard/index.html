@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - FoodShare</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Admin Dashboard</span>
+            </div>
+            <div class="admin-info">
+                <span class="admin-name">Admin User</span>
+                <button class="btn-logout" onclick="adminApp.logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="menu-item" data-section="donations">
+                    <i class="fas fa-utensils"></i>
+                    <span>Donations</span>
+                </li>
+                <li class="menu-item" data-section="donors">
+                    <i class="fas fa-users"></i>
+                    <span>Donor Management</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1>Dashboard Overview</h1>
+                    <p>Monitor food donations and system activity</p>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-donations">0</h3>
+                            <p>Total Donations</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="received-donations">0</h3>
+                            <p>Donations Received</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-donors">0</h3>
+                            <p>Total Donors</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="approved-donors">0</h3>
+                            <p>Approved Donors</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Recent Donations</h3>
+                        <div id="recent-donations" class="activity-list">
+                            <!-- Recent donations will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Pending Approvals</h3>
+                        <div id="pending-approvals" class="activity-list">
+                            <!-- Pending approvals will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Donations Section -->
+            <section id="donations" class="content-section">
+                <div class="section-header">
+                    <h1>Donation Management</h1>
+                    <div class="section-actions">
+                        <select id="donation-filter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="available">Available</option>
+                            <option value="reserved">Reserved</option>
+                            <option value="distributed">Distributed</option>
+                        </select>
+                        <input type="text" id="donation-search" placeholder="Search donations..." class="search-input">
+                    </div>
+                </div>
+                <div id="donations-list" class="data-table-container">
+                    <!-- Donations table will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Donor Management Section -->
+            <section id="donors" class="content-section">
+                <div class="section-header">
+                    <h1>Donor Management</h1>
+                    <div class="section-actions">
+                        <select id="donor-filter" class="filter-select">
+                            <option value="">All Donors</option>
+                            <option value="approved">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <input type="text" id="donor-search" placeholder="Search donors..." class="search-input">
+                        <button class="btn-action btn-edit" onclick="adminApp.resetDonorsToPending()" style="margin-left: 10px;">
+                            <i class="fas fa-undo"></i> Reset to Pending
+                        </button>
+                    </div>
+                </div>
+                <div id="donors-list" class="data-table-container">
+                    <!-- Donors table will be loaded here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Approval Modal -->
+    <div id="approval-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="adminApp.hideApprovalModal()">&times;</span>
+            <h2>Donor Approval</h2>
+            <div id="donor-details" class="donor-details">
+                <!-- Donor details will be loaded here -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn-approve" onclick="adminApp.approveDonor()">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn-reject" onclick="adminApp.rejectDonor()">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Container -->
+    <div id="message-container" class="message-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
